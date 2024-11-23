@@ -1,0 +1,108 @@
+body {
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  border-radius: 15px;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.container h1 {
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+  gap: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.start {
+  background-color: #4caf50;
+}
+
+.stop {
+  background-color: #f44336;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#countdown-root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start {
+  background-color: #4caf50;
+}
+
+.stop {
+  background-color: #f44336;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#countdown-root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.transform {
+  transform: rotate(-90deg);
+  
+}
+
+.-rotate-90 {
+  transform: rotate(-90deg);
+}
+

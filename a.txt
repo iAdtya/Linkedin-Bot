@@ -1,0 +1,114 @@
+import "./App.css";
+import { useState, useEffect, useRef } from "react";
+
+function App() {
+  const maxCount = 10;
+  const [count, setCount] = useState(maxCount);
+  const [isRunning, setIsRunning] = useState(false);
+  const countRef = useRef<number | null>(null);
+
+  const size = 200;
+  const strokeWidth = 15;
+  const center = size / 2;
+  const radius = center - strokeWidth;
+  const circumference = 2 * Math.PI * radius;
+
+  const strokeDashoffset = ((maxCount - count) / maxCount) * circumference;
+
+  useEffect(() => {
+    const handleMessage = (message: any) => {
+      // Only decrement counter when a connection is successfully sent
+      if (message.action === "connectionSent") {
+        setCount((prev) => Math.max(prev - 1, 0));
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  const handleStart = () => {
+    if (!isRunning) {
+      setIsRunning(true);
+      setCount(maxCount); // Reset count when starting
+      chrome.runtime.sendMessage({ action: "start" });
+    }
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
+    if (countRef.current) {
+      clearTimeout(countRef.current);
+    }
+    chrome.runtime.sendMessage({ action: "stop" });
+  };
+
+  return (
+    <>
+      <div className="container">
+        <h1>LinkedIn Auto Connector</h1>
+        <div id="countdown-root" className="relative">
+          <svg className="absolute" width={size} height={size}>
+            <circle
+              cx={center}
+              cy={center}
+              r={radius}
+              fill="none"
+              stroke="#e0e0e0"
+              strokeWidth={strokeWidth}
+            />
+          </svg>
+
+          <div
+            className="absolute flex items-center justify-center text-4xl font-bold"
+            style={{
+              color: "#4caf50",
+              zIndex: 4,
+              fontSize: "4rem",
+            }}
+          >
+            {count}
+          </div>
+
+          <svg className="absolute" width={size} height={size}>
+            <circle
+              cx={center}
+              cy={center}
+              r={radius}
+              fill="none"
+              stroke="#4caf50"
+              strokeWidth={strokeWidth}
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              strokeLinecap="round"
+              style={{
+                transition: "stroke-dashoffset 0.5s ease-in-out",
+              }}
+            />
+          </svg>
+        </div>
+        <div className="buttons">
+          <button 
+            className="start" 
+            onClick={handleStart}
+            disabled={isRunning}
+          >
+            Start
+          </button>
+          <button 
+            className="stop" 
+            onClick={handleStop}
+            disabled={!isRunning}
+          >
+            Stop
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
