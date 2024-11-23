@@ -5,7 +5,7 @@ Linkedin sales bot is a auto connection bot that programatically sends connectio
 ## Start-Project
 
 ```bash
-git clone 
+git clone https://github.com/iAdtya/Linkedin-Bot
 ```
 
 ```bash
